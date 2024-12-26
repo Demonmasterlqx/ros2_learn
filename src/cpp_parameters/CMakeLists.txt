@@ -10,8 +10,10 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 
 add_executable(minmal_param_node src/cpp_parameters_node.cpp)
+add_executable(test_param src/test_param.cpp)
 
 ament_target_dependencies(minmal_param_node rclcpp)
+ament_target_dependencies(test_param rclcpp)
 
 install(
   DIRECTORY launch
@@ -20,6 +22,7 @@ install(
 
 install(TARGETS
   minmal_param_node
+  test_param
   DESTINATION lib/${PROJECT_NAME}
 )
 

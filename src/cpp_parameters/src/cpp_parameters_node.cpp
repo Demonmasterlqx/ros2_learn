@@ -14,7 +14,9 @@ public:
   {
     auto param_desc=rcl_interfaces::msg::ParameterDescriptor();
     param_desc.description="C++_Ros2_try_for_LQX.";
-    this->declare_parameter("my_parameter", "world");
+    this->declare_parameter("my_parameter", "world",param_desc);
+    RCLCPP_INFO (this->get_logger(),"%s",this->get_parameter("my_parameter").as_string().c_str());
+    // RCLCPP_INFO (this->get_logger(),"%lf",this->get_parameter("get_parameter").as_double());
     auto timer_callback = [this](){
       std::string my_param = this->get_parameter("my_parameter").as_string();
 
