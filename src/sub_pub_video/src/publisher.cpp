@@ -3,12 +3,15 @@
 #include <opencv2/opencv.hpp>
 #include <cv_bridge/cv_bridge.h>
 #include <thread>
+#include <rclcpp_components/register_node_macro.hpp>
+
+namespace VideoSUBPUB{
 
 class VideoPublisher : public rclcpp::Node
 {
 public:
-    VideoPublisher()
-    : Node("video_publisher")
+    VideoPublisher(rclcpp::NodeOptions options)
+    : Node("video_publisher",options)
     {
         publisher_ = this->create_publisher<sensor_msgs::msg::Image>("video_frame", 10);
         timer_ = this->create_wall_timer(
@@ -45,10 +48,14 @@ private:
     cv::VideoCapture cap_;
 };
 
-int main(int argc, char * argv[])
-{
-    rclcpp::init(argc, argv);
-    rclcpp::spin(std::make_shared<VideoPublisher>());
-    rclcpp::shutdown();
-    return 0;
 }
+
+// int main(int argc, char * argv[])
+// {
+//     rclcpp::init(argc, argv);
+//     rclcpp::spin(std::make_shared<VideoPublisher>());
+//     rclcpp::shutdown();
+//     return 0;
+// }
+
+RCLCPP_COMPONENTS_REGISTER_NODE(VideoSUBPUB::VideoPublisher)

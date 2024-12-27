@@ -2,12 +2,14 @@
 #include <sensor_msgs/msg/image.hpp>
 #include <opencv2/opencv.hpp>
 #include <cv_bridge/cv_bridge.h>
+#include <rclcpp_components/register_node_macro.hpp>
 
-class VideoSubscriber : public rclcpp::Node
+namespace VideoSUBPUB
+{class VideoSubscriber : public rclcpp::Node
 {
 public:
-    VideoSubscriber()
-    : Node("video_subscriber")
+    VideoSubscriber(rclcpp::NodeOptions options)
+    : Node("video_subscriber",options)
     {
         cv::namedWindow("Video Frame");
         subscription_ = this->create_subscription<sensor_msgs::msg::Image>(
@@ -34,12 +36,14 @@ private:
         cv::waitKey(16);
     }
     rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr subscription_;
-};
+};}
 
-int main(int argc, char * argv[])
-{
-    rclcpp::init(argc, argv);
-    rclcpp::spin(std::make_shared<VideoSubscriber>());
-    rclcpp::shutdown();
-    return 0;
-}
+// int main(int argc, char * argv[])
+// {
+//     rclcpp::init(argc, argv);
+//     rclcpp::spin(std::make_shared<VideoSubscriber>());
+//     rclcpp::shutdown();
+//     return 0;
+// }
+
+RCLCPP_COMPONENTS_REGISTER_NODE(VideoSUBPUB::VideoSubscriber)

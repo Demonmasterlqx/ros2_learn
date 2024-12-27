@@ -11,20 +11,37 @@ find_package(rclcpp REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(cv_bridge REQUIRED)
 find_package(OpenCV REQUIRED)
+find_package(rclcpp_components REQUIRED)
+
 
 # 添加可执行文件
-add_executable(video_publisher src/publisher.cpp)
-add_executable(video_subscriber src/subscriber.cpp)
+add_library(video_publisher SHARED src/publisher.cpp)
+add_library(video_subscriber SHARED src/subscriber.cpp)
 
 # 链接库
-ament_target_dependencies(video_publisher rclcpp sensor_msgs cv_bridge OpenCV)
-ament_target_dependencies(video_subscriber rclcpp sensor_msgs cv_bridge OpenCV)
+ament_target_dependencies(video_publisher rclcpp rclcpp_components sensor_msgs cv_bridge OpenCV)
+ament_target_dependencies(video_subscriber rclcpp rclcpp_components sensor_msgs cv_bridge OpenCV)
 
-# 安装可执行文件
-install(TARGETS
-  video_publisher
-  video_subscriber
-  DESTINATION lib/${PROJECT_NAME})
+# 注册组件
+rclcpp_components_register_node(video_publisher 
+  PLUGIN "VideoSUBPUB::VideoPublisher" 
+  EXECUTABLE video_publisher_exe)
+rclcpp_components_register_node(video_subscriber 
+  PLUGIN "VideoSUBPUB::VideoSubscriber" 
+  EXECUTABLE video_subscriber_exe)
+
+# 导出目标
+# ament_export_targets(video_subscriber_exe)
+# ament_export_targets(video_publisher_exe)
+
+install(
+  TARGETS video_publisher
+  TARGETS video_subscriber
+  # EXPORT video_subscriber_exe
+  # EXPORT video_publisher_exe
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

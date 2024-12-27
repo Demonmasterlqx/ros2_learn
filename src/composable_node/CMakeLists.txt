@@ -34,16 +34,16 @@ install(
   DESTINATION share/${PROJECT_NAME}
 )
 
-# ament_export_targets(export_sub_call_me)
-# ament_export_targets(export_pub_call_me)
+ament_export_targets(sub_call_me_exe)
+ament_export_targets(sub_call_me_exe)
 
 #这是一个用于 ROS 2 构建系统的 CMake 宏，用于导出一个目标（比如库或可执行文件），使得该目标能够被其他依赖此目标的 ROS 2 包使用。通过这种方式，其他包可以链接到该目标，使用它提供的功能。
 
 install(
   TARGETS sub_call_me
   TARGETS pub_call_me
-  # EXPORT export_sub_call_me
-  # EXPORT export_pub_call_me
+  EXPORT sub_call_me_exe
+  EXPORT sub_call_me_exe
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin
