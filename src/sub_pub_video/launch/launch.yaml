@@ -1,0 +1,10 @@
+launch:
+
+- node:
+    pkg: "sub_pub_video"
+    exec: "video_publisher_exe"
+    name: "pub_video"
+- node:
+    pkg: "sub_pub_video"
+    exec: "video_subscriber_exe"
+    name: "sub_video"
