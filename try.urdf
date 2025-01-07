@@ -1,0 +1,50 @@
+<robot name="NB">
+
+    <material name="blue">
+        <color rgba="0 0 0.8 1"/>
+    </material>
+
+    <material name="black">
+        <color rgba="0 0 0 1"/>
+    </material>
+
+    <material name="white">
+        <color rgba="1 1 1 1"/>
+    </material>
+
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <cylinder length="0.6" radius="0.2"/>
+            </geometry>
+            <material name="blue"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder length="0.6" radius="0.2"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="head">
+        <visual>
+            <geometry>
+                <sphere radius="0.2"/>
+            </geometry>
+        <origin rpy="0 0 0" xyz="0 0 0.3"/>
+        <material name="white"/>
+        </visual>
+        <collision>
+            <geometry>
+                <sphere radius="0.2"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="head_to_base" type="fixed">
+        <parent link="base_link"/>
+        <child link="head"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+
+</robot>

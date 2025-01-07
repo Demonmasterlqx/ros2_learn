@@ -12,6 +12,7 @@ class IMshow : public rclcpp::Node{
         IMshow():Node("Imshow"){
             if(rclcpp::ok()){
                 RCLCPP_INFO(this->get_logger(),"IMshow is running");
+                this->set_parameter(rclcpp::Parameter("my_parameter","Hello World"));
                 // cv::Mat image=cv::imread("/home/lqx/code/ros2_learn/image/yinglang.jpg");
                 // cv::imshow("image",image);
                 auto callback=[this](){
